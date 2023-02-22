@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/docopt/docopt-go"
 	"github.com/snsinfu/reverse-tunnel/config"
 	"github.com/snsinfu/reverse-tunnel/server"
 )
@@ -47,5 +46,6 @@ func run(options docopt.Opts) error {
 		}
 	}
 
-	return server.Start(conf)
+	_, err := server.Start(conf)
+	return err
 }

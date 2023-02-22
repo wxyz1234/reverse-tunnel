@@ -5,14 +5,15 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/snsinfu/reverse-tunnel/config"
 	"golang.org/x/crypto/acme/autocert"
+
+	"github.com/snsinfu/reverse-tunnel/config"
 )
 
 // Start starts tunneling server with given configuration.
-func Start(conf config.Server) error {
+func Start(conf config.Server) (*echo.Echo, error) {
 	if err := conf.Check(); err != nil {
-		return fmt.Errorf("config error: %w", err)
+		return nil, fmt.Errorf("config error: %w", err)
 	}
 
 	e := echo.New()
@@ -37,7 +38,7 @@ func Start(conf config.Server) error {
 	e.GET("/session/:id", action.GetSession)
 
 	if useTLS {
-		return e.StartAutoTLS(conf.ControlAddress)
+		return e, e.StartAutoTLS(conf.ControlAddress)
 	}
-	return e.Start(conf.ControlAddress)
+	return e, e.Start(conf.ControlAddress)
 }
