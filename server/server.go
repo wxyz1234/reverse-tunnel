@@ -11,9 +11,9 @@ import (
 )
 
 // Start starts tunneling server with given configuration.
-func Start(conf config.Server) (*echo.Echo, error) {
+func Start(conf config.Server, re *echo.Echo) error {
 	if err := conf.Check(); err != nil {
-		return nil, fmt.Errorf("config error: %w", err)
+		return fmt.Errorf("config error: %w", err)
 	}
 
 	e := echo.New()
@@ -37,8 +37,9 @@ func Start(conf config.Server) (*echo.Echo, error) {
 	e.GET("/udp/:port", action.GetUDPPort)
 	e.GET("/session/:id", action.GetSession)
 
+	re = e
 	if useTLS {
-		return e, e.StartAutoTLS(conf.ControlAddress)
+		return e.StartAutoTLS(conf.ControlAddress)
 	}
-	return e, e.Start(conf.ControlAddress)
+	return e.Start(conf.ControlAddress)
 }
