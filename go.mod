@@ -6,7 +6,6 @@ require (
 	github.com/docopt/docopt-go v0.0.0-20180111231733-ee0de3bc6815
 	github.com/gorilla/websocket v1.4.2
 	github.com/labstack/echo/v4 v4.4.0
-	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/snsinfu/go-taskch v0.0.0-20180712163333-027d03ae24cd
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
